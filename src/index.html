@@ -40,13 +40,14 @@
                 Asking Price
               </label>
               <input
-                type="number"
+                type="text"
                 id="askingPriceInput"
-                placeholder="e.g., 250000"
+                placeholder="e.g., 1000000"
                 required
                 step="1"
                 min="1"
-                class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                inputmode="numeric"
+                class="currency-input w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
               />
             </div>
             <h3 class="text-xl font-medium mb-3 text-gray-700">
@@ -71,13 +72,14 @@
               </select>
 
               <input
-                type="number"
+                type="text"
                 id="amountInput"
                 required
                 placeholder="Historic Price"
                 step="1"
                 min="1"
-                class="w-full sm:w-1/4 p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                inputmode="numeric"
+                class="currency-input w-full sm:w-1/4 p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
               />
 
               <button
@@ -182,10 +184,10 @@
                 <strong>Historic Price:</strong> The original dollar amount of a sale at a specific point in time.
             </li>
             <li>
-                 <strong>Adjusted Price:</strong> What the  <strong>Historic Price</strong> would be worth in today's dollars (as of the latest CPI data available: <strong>September 2025</strong>).
+                 <strong>Adjusted Price:</strong> What the  <strong>Historic Price</strong> would be worth in today's dollars (as of the latest CPI data available: <strong>November 2025</strong>).
             </li>
             <li>
-                 <strong>Asking Price:</strong> Allows you to compare a modern asking price against the inflation-adjusted value of a historic comparable sale.
+                 <strong>Asking Price:</strong> Allows you to compare the current asking price against the inflation-adjusted value of a historic sales of the same house.
             </li>
             <li>
                  <strong>Over/Under: </strong> Shows the difference between the modern  <strong>Asking Price</strong> and the <strong>Adjusted Price</strong>.

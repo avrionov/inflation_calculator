@@ -4,7 +4,7 @@ let entries = [];
 let entryIdCounter = 0; // Use an ID for reliable deletion
 
 // Set the latest available month as the target for adjustment
-const BASE_CPI_DATE = "2025-09";
+const BASE_CPI_DATE = "2025-11";
 const MIN_CPI_DATE = "1913-01";
 
 // Assumes CPI_DATA is loaded globally via cpi_data.js
@@ -24,7 +24,7 @@ const confirmDeleteButton = document.getElementById("confirmDelete");
 const cancelDeleteButton = document.getElementById("cancelDelete");
 const deleteAllButton = document.getElementById("deleteAllButton");
 const minDate = "1913-01";
-const maxDate = "2025-09";
+const maxDate = "2025-11"
 const minYear = parseInt(minDate.substring(0, 4));
 const maxYear = parseInt(maxDate.substring(0, 4));
 const minMonth = parseInt(minDate.substring(5, 7));
@@ -140,7 +140,7 @@ function addEntry(dateStr, amount, askingPrice) {
     amount: originalAmount,
     adjustedAmount: adjustedPrice,
     askingPrice: askingPrice,
-    overunder: 1 - askingPrice / adjustedPrice,
+    overunder: askingPrice / adjustedPrice -1,
   };
   entries.push(newEntry);
 
@@ -369,6 +369,22 @@ function showConfirmationDialog() {
   confirmDeleteButton.addEventListener("click", newConfirmHandler);
 }
 
+function formatCurrency(e) {
+  // Remove all non-digits
+  let value = e.target.value.replace(/\D/g, '');
+  
+  // Reformat with commas
+  if (value) {
+    e.target.value = new Intl.NumberFormat('en-US').format(value);
+  } else {
+    e.target.value = '';
+  }
+}
+
+function getRawValue(element) { 
+  return element ? Number(element.value.replace(/\D/g, '')) : 0;
+}
+
 // --- Event Handlers and Initialization ---
 
 entryForm.addEventListener("submit", (e) => {
@@ -378,8 +394,9 @@ entryForm.addEventListener("submit", (e) => {
   const selectedMonth = monthSelect.value;
   const date = `${selectedYear}-${selectedMonth}`;
 
-  const amount = amountInput.value;
-  const askingPrice = askingPriceInput.value;
+  const amount = getRawValue(amountInput);
+  //const askingPrice = askingPriceInput.value;
+  const askingPrice =getRawValue(askingPriceInput);
 
   if (date && amount && parseFloat(amount) > 0) {
     addEntry(date, amount, askingPrice);
@@ -448,8 +465,24 @@ document.addEventListener("DOMContentLoaded", () => {
                 deleteEntry(Number(entryId)); 
             }
         }
-    });
-    
+    } );
+
+  //   askingPriceInput.addEventListener('input', function (e) {
+  //   // 1. Remove all non-numeric characters (handles pasted $ and commas)
+  //   let value = e.target.value.replace(/\D/g, '');
+
+  //   // 2. Format with thousands separator
+  //   if (value) {
+  //     // Use Intl.NumberFormat for local currency formatting
+  //     e.target.value = new Intl.NumberFormat('en-US').format(value);
+  //   } else {
+  //     e.target.value = '';
+  //   }
+  // });
+  document.querySelectorAll('.currency-input').forEach(input => {
+      input.addEventListener('input', formatCurrency);
+  });
+
   // Initial setup
   populateYears();
   setDefaults();
